@@ -19,8 +19,9 @@ def first(grammar, sentence, not_terminal_table, k):
     if len(not_terminal_table) == 0:
         raise Exception("Forgot to calculate not_terminal_table")
     symbols = re.findall(r'.', sentence)
-    final_sets = [not_terminal_table[symbol] if symbol in grammar.not_terminals else {symbol }for symbol in symbols]
+    final_sets = [not_terminal_table[symbol] if symbol in grammar.not_terminals else {symbol} for symbol in symbols]
     result = concatenation(k, *final_sets)
+    result.add('')
     return result
 
 
@@ -71,43 +72,3 @@ def is_the_beginning_terminals(string, terminals, k):
     return True
 
 
-builder = GrammarBuilder()
-builder.add_not_terminals(["S", "A", "B"])
-builder.add_terminals(["a", "b"])
-builder.add_rules(("S->aB", "S->bA", "A->a", "B->b", "A->bAA", "B->aBB", "A->aS", "B->bS"))
-builder.set_start_symbol("S")
-
-
-builder181 = GrammarBuilder()
-builder181.add_not_terminals(["E", "R", "T", "G", "F"])
-builder181.add_terminals(["a", "+", "*", "(", ")"])
-builder181.add_rules(("E->TR", "R->+TR", "R->", "T->FG", "G->*FG", "G->", "F->(E)", "F->a"))
-builder181.set_start_symbol("E")
-g = builder181.make_grammar()
-# g.print_grammar()
-
-# use_rule("abbbbcDR", "b->JJ")
-# a = {"ab", "a"}
-# b = {"##", "?"}
-# ll = [a, b]
-# print(concatenation(3, *ll))
-"""
-for nt in g.not_terminals:
-    print('First(%c): ' % nt + str(first_for_not_terminal(g, nt, 0, 1)))
-print()
-
-for nt in g.not_terminals:
-    print('First(%c): ' % nt + str(first_for_not_terminal(g, nt, 1, 1)))
-print()
-for nt in g.not_terminals:
-    print('First(%c): ' % nt + str(first_for_not_terminal(g, nt, 2, 1)))
-print()
-for nt in g.not_terminals:
-    print('First(%c): ' % nt + str(first_for_not_terminal(g, nt, 3, 1)))
-print()
-print()print()
-"""
-
-table = calc_not_terminal_table(g, 1)
-for nt in g.not_terminals:
-    print(first(g, nt, table, 1))

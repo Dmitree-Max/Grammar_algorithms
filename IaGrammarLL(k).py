@@ -25,24 +25,6 @@ def sigma_hatch(a, b, grammar, deep, k):
     return result
 
 
-
-"""
-builder = GrammarBuilder()
-builder.add_not_terminals(["S", "A", "B"])
-builder.add_terminals(["a", "b"])
-builder.add_rules(("S->aB", "S->bA", "A->a", "B->b", "A->bAA", "B->aBB", "A->aS", "B->bS"))
-builder.set_start_symbol("S")
-
-
-builder181 = GrammarBuilder()
-builder181.add_not_terminals(["E", "R", "T", "G", "F"])
-builder181.add_terminals(["a", "+", "*", "(", ")"])
-builder181.add_rules(("E->TR", "R->+TR", "R->", "T->FG", "G->*FG", "G->", "F->(E)", "F->a"))
-builder181.set_start_symbol("E")
-g = builder181.make_grammar()
-# g.print_grammar()
-"""
-
 builder184 = GrammarBuilder()
 builder184.add_not_terminals(["S", "A"])
 builder184.add_terminals(["a", "b"])
@@ -61,5 +43,5 @@ print(res3)
 res4 = sigma_hatch("A", "A", g, 0, 1)
 print(res4)
 
-
+print("-----------------------------------")
 

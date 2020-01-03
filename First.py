@@ -16,12 +16,15 @@ def calc_not_terminal_table(grammar, k):
 
 
 def first(grammar, sentence, not_terminal_table, k):
+    if len(sentence) == 0:
+        result = set()
+        result.add('')
+        return result
     if len(not_terminal_table) == 0:
         raise Exception("Forgot to calculate not_terminal_table")
     symbols = re.findall(r'.', sentence)
     final_sets = [not_terminal_table[symbol] if symbol in grammar.not_terminals else {symbol} for symbol in symbols]
     result = concatenation(k, *final_sets)
-    result.add('')
     return result
 
 

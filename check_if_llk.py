@@ -2,7 +2,7 @@ import re
 import first
 import basic_functions
 import sigma_hatch
-
+import time
 
 def split_rules_by_not_terminals(grammar):
     """
@@ -28,8 +28,12 @@ def split_rules_by_not_terminals(grammar):
 
 def is_grammar_llk(grammar, k):
     nt_with_alternatives = split_rules_by_not_terminals(grammar)
+    # time1 = time.time()
     sigmas = sigma_hatch.sigma_hatch(grammar, k)
+    # time2 = time.time()
     table = first.calc_not_terminal_table(grammar, k)
+    # time3 = time.time()
+    # print("sigmas:  " + str(time2 - time1) + '   firsts:   ' + str(time3 - time2))
     for nt in nt_with_alternatives.keys():
         current_sigma = sigmas[grammar.start_symbol + nt]
         for x in nt_with_alternatives[nt]:

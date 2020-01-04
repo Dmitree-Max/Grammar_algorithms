@@ -3,7 +3,7 @@ import first
 import basic_functions
 
 
-def sigma_hatch_zero_level(a, b, grammar, this_result, k):
+def sigma_hatch_zero_level(a, b, grammar, this_result, table, k):
     """
     Functions adds into dictionary this_result note with key a + b and value as sigma hatch function value
      on zero iteration of a and b not terminals
@@ -15,7 +15,6 @@ def sigma_hatch_zero_level(a, b, grammar, this_result, k):
     :return: none
     """
     result = set()
-    table = first.calc_not_terminal_table(grammar, k)
     for rule in grammar.rules:
         after_rule_string = basic_functions.use_rule(a, rule)
         if after_rule_string == a:
@@ -34,7 +33,7 @@ def sigma_hatch_zero_level(a, b, grammar, this_result, k):
     return
 
 
-def sigma_hatch_next_level(a, b, grammar, previous_result, this_result, k):
+def sigma_hatch_next_level(a, b, grammar, previous_result, this_result, table, k):
     """
     Functions adds into dictionary this_result note with key a + b and value as sigma hatch function value
      on some iteration of a and b not terminals, bases on previous iteration result from previous_result
@@ -48,7 +47,6 @@ def sigma_hatch_next_level(a, b, grammar, previous_result, this_result, k):
     :return: none
     """
     result = set()
-    table = first.calc_not_terminal_table(grammar, k)
     for rule in grammar.rules:
         after_rule_string = basic_functions.use_rule(a, rule)
         if after_rule_string == a:
@@ -77,18 +75,19 @@ def sigma_hatch(grammar, k):
     :param k: (int) characteristic of ll(k) grammars
     :return: (dictionary<string, set<string>>) dictionary with result
     """
+    table = first.calc_not_terminal_table(grammar, k)
     current_table = {}
     next_step_table = {}
     for a in grammar.not_terminals:
         for b in grammar.not_terminals:
-            sigma_hatch_zero_level(a, b, grammar, next_step_table, k)
+            sigma_hatch_zero_level(a, b, grammar, next_step_table, table, k)
     deep = 0
     while current_table != next_step_table:
         current_table = next_step_table
         next_step_table = {}
         for a in grammar.not_terminals:
             for b in grammar.not_terminals:
-                sigma_hatch_next_level(a, b, grammar, current_table, next_step_table, k)
+                sigma_hatch_next_level(a, b, grammar, current_table, next_step_table, table, k)
         # print(next_step_table)
         deep += 1
         if deep == 20:

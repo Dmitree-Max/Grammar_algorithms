@@ -11,6 +11,6 @@ g1 = builder.make_grammar()
 g1.print_grammar()
 print("-----------------------------------")
 
-for k in range(1, 5):
+for k in range(1, 8):
     answer = is_grammar_llk(g1, k)
     print("Является ли грамматика ll(%i)?       " % k + answer)

@@ -1,6 +1,5 @@
 import re
 import first
-from Grammar import GrammarBuilder
 import basic_functions
 
 
@@ -90,7 +89,7 @@ def sigma_hatch(grammar, k):
         for a in grammar.not_terminals:
             for b in grammar.not_terminals:
                 sigma_hatch_next_level(a, b, grammar, current_table, next_step_table, k)
-        print(next_step_table)
+        # print(next_step_table)
         deep += 1
         if deep == 20:
             raise Exception("Attention, 20-depth has been reached")
@@ -110,16 +109,6 @@ def find_first_not_terminal(string, not_terminals):
     return ''
 
 
-builder184 = GrammarBuilder()
-builder184.add_not_terminals(["S", "A"])
-builder184.add_terminals(["a", "b"])
-builder184.add_rules(("S->AS", "S->", "A->aA", "A->b"))
-builder184.set_start_symbol("S")
-g = builder184.make_grammar()
 
-
-sigma_hatch(g, 1)
-
-print("-----------------------------------")
 
 

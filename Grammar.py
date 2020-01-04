@@ -1,3 +1,5 @@
+import re
+
 
 class Grammar:
     def __init__(self, not_terminals, terminals, rules, start_symbol):
@@ -28,6 +30,18 @@ class GrammarBuilder:
 
     def set_start_symbol(self, start_symbol):
         self.start_symbol = start_symbol
+
+    def config_from_file(self, file_name):
+        with open(file_name, 'r') as file:
+            content = file.read()
+        content = content.replace(" ", "")
+        parts = re.findall(r'{(.*)}', content)
+        parts_order = ['not_terminals', 'terminals', 'rules', 'start_symbol']
+        for i in range(4):
+            elements = re.split(r',', parts[i])
+            self.__setattr__(parts_order[i], elements)
+            if i == 3:
+                self.__setattr__(parts_order[i], elements[0])
 
     def make_grammar(self):
         if self.start_symbol not in self.not_terminals:

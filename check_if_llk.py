@@ -4,6 +4,7 @@ import basic_functions
 import sigma_hatch
 import time
 
+
 def split_rules_by_not_terminals(grammar):
     """
     Returns dictionary with not terminals which has at least two alternatives as a key, and set of
@@ -27,6 +28,12 @@ def split_rules_by_not_terminals(grammar):
 
 
 def is_grammar_llk(grammar, k):
+    """
+    Function returns "Да", if grammar belong to ll(k), otherwise returns "Нет"
+    :param grammar: (Grammar) grammar to check
+    :param k: (int) characteristic of grammar's class ll(k)
+    :return: (string) "Да"/"Нет"
+    """
     nt_with_alternatives = split_rules_by_not_terminals(grammar)
     # time1 = time.time()
     sigmas = sigma_hatch.sigma_hatch(grammar, k)

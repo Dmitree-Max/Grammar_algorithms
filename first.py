@@ -14,7 +14,7 @@ def calc_not_terminal_table(grammar, k):
         calculate_first_for_not_terminal_zero_iteration(grammar, symbol, next_step_result, k)
     deep = 0
     while current_result != next_step_result:
-        current_result = next_step_result
+        current_result = next_step_result.copy()
         for symbol in grammar.not_terminals:
             calculate_first_for_not_terminal_next(grammar, symbol, current_result, next_step_result, k)
         deep += 1
@@ -23,7 +23,7 @@ def calc_not_terminal_table(grammar, k):
     return current_result
 
 
-def first(grammar, sentence, not_terminal_table, k):
+def first(grammar, sentence, not_terminal_table={}, k=1):
     """
     Calculates and returns first for current sentence. To work need calculated not-terminal table
     :param grammar: (Grammar) grammar we work with
@@ -37,7 +37,7 @@ def first(grammar, sentence, not_terminal_table, k):
         result.add('')
         return result
     if len(not_terminal_table) == 0:
-        raise Exception("Forgot to calculate not_terminal_table")
+        not_terminal_table = calc_not_terminal_table(grammar, k)
     symbols = re.findall(r'.', sentence)
     final_sets = [first_for_symbol(grammar, symbol, not_terminal_table) for symbol in symbols]
     result = concatenation(k, *final_sets)
@@ -58,7 +58,7 @@ def first_for_symbol(grammar, symbol, not_terminal_table):
     elif symbol in grammar.not_terminals:
         result = not_terminal_table[symbol]
     else:
-        raise Exception("Symbol not in grammars alphabets")
+        raise Exception("Symbol %c not in grammars alphabets" % symbol)
     return result
 
 

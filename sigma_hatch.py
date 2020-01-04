@@ -87,7 +87,7 @@ def sigma_hatch(grammar, k):
             sigma_hatch_zero_level(a, b, grammar, next_step_table, table, k)
     deep = 0
     while current_table != next_step_table:
-        current_table = next_step_table
+        current_table = next_step_table.copy()
         for a in grammar.not_terminals:
             for b in grammar.not_terminals:
                 sigma_hatch_next_level(a, b, grammar, current_table, next_step_table, table, k)
